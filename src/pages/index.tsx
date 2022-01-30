@@ -2,9 +2,10 @@ import type { NextPage } from 'next';
 import { useState } from 'react';
 import { useModal } from 'react-hooks-use-modal';
 import styled from 'styled-components';
-import { Modal as ModalSample } from '../components/Modal1';
+import { Modal as ModalSample1 } from '../components/Modal1';
+import { useModalSample } from '../hooks/useModalSample';
 
-const Sample2Modal = styled.div`
+const ModalStyle = styled.div`
   display: flex;
   flex-direction: column;
   font-weight: normal;
@@ -28,6 +29,8 @@ const Home: NextPage = () => {
     // これはオプション。デフォルトはfalse
     preventScroll: true,
   });
+  const [ModalSample2, openSample2, closeSample2, isOpenModalSample2] =
+    useModalSample();
   return (
     <div>
       {/* モーダルのサンプルその1 */}
@@ -37,7 +40,7 @@ const Home: NextPage = () => {
         <button type="button" onClick={() => setIsOpenModal(true)}>
           OPEN
         </button>
-        <ModalSample
+        <ModalSample1
           open={isOpenModal}
           onClose={() => setIsOpenModal(!isOpenModal)}
         >
@@ -46,7 +49,7 @@ const Home: NextPage = () => {
           <button type="button" onClick={() => setIsOpenModal(false)}>
             CLOSE
           </button>
-        </ModalSample>
+        </ModalSample1>
       </div>
       {/* モーダルのサンプルその2 */}
       <div>
@@ -57,26 +60,39 @@ const Home: NextPage = () => {
             OPEN
           </button>
           <Modal>
-            <Sample2Modal>
+            <ModalStyle>
               <h1>Title2</h1>
               <p>This is a customizable modal.</p>
               <button type="button" onClick={close}>
                 CLOSE
               </button>
-            </Sample2Modal>
+            </ModalStyle>
           </Modal>
+        </div>
+      </div>
+      {/* モーダルのサンプルその3 */}
+      <div>
+        <div>
+          <h2>モーダルのサンプルその3</h2>
+          <p>Modal is Open? {isOpenModalSample2 ? 'Yes' : 'No'}</p>
+          <button type="button" onClick={openSample2}>
+            OPEN
+          </button>
+          <ModalSample2>
+            <h1>Title3</h1>
+            <p>This is a customizable modal.</p>
+            <button type="button" onClick={closeSample2}>
+              CLOSE
+            </button>
+          </ModalSample2>
         </div>
       </div>
       {/* コンテンツの高さ増やす適当な要素 */}
       <div>
         <h2>コンテンツの高さ増やす適当な要素</h2>
-        {
-        [...Array(100)].map((_, i) => (
-          <div>
-            {`hello, ${i}`}
-          </div>
-        ))
-      }
+        {[...Array(100)].map((_, i) => (
+          <div>{`hello, ${i}`}</div>
+        ))}
       </div>
     </div>
   );
