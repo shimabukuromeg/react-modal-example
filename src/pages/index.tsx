@@ -5,6 +5,10 @@ import styled from 'styled-components';
 import { Modal as ModalSample1 } from '../components/Modal1';
 import { useModalSample } from '../hooks/useModalSample';
 
+const Container = styled.div`
+  margin: 100px;
+`
+
 const ModalStyle = styled.div`
   display: flex;
   flex-direction: column;
@@ -24,18 +28,21 @@ const ModalStyle = styled.div`
 `;
 
 const Home: NextPage = () => {
+  // サンプルその1
   const [isOpenModal, setIsOpenModal] = useState(false);
+  // サンプルその2
   const [Modal, open, close, isOpen] = useModal('__next', {
-    // これはオプション。デフォルトはfalse
     preventScroll: true,
   });
+  // サンプルその3
   const [ModalSample2, openSample2, closeSample2, isOpenModalSample2] =
     useModalSample();
   return (
     <div>
-      {/* モーダルのサンプルその1 */}
-      <div>
+      {/* モーダルのサンプルその1 状態が変わったときのコールバック関数をpropsに渡す普通のアレパターン */}
+      <Container>
         <h2>モーダルのサンプルその1</h2>
+        <h3>状態が変わったときのコールバック関数をpropsに渡す普通のアレパターン</h3>
         <p>Modal is Open? {isOpenModal ? 'Yes' : 'No'}</p>
         <button type="button" onClick={() => setIsOpenModal(true)}>
           OPEN
@@ -50,11 +57,12 @@ const Home: NextPage = () => {
             CLOSE
           </button>
         </ModalSample1>
-      </div>
-      {/* モーダルのサンプルその2 */}
-      <div>
+      </Container>
+      {/* モーダルのサンプルその2 状態と、ビューとなるコンポーネントを組にして返すパターン（react-hooks-use-modalを使ってみた） */}
+      <Container>
         <div>
-          <h2>モーダルのサンプルその2</h2>
+          <h2>モーダルのサンプルその2 </h2>
+          <h3>状態と、ビューとなるコンポーネントを組にして返すパターン（react-hooks-use-modalを使ってみた）</h3>
           <p>Modal is Open? {isOpen ? 'Yes' : 'No'}</p>
           <button type="button" onClick={open}>
             OPEN
@@ -69,11 +77,12 @@ const Home: NextPage = () => {
             </ModalStyle>
           </Modal>
         </div>
-      </div>
-      {/* モーダルのサンプルその3 */}
-      <div>
+      </Container>
+      {/* モーダルのサンプルその3 react-hooks-use-modal を参考にサンプルその1を書き直してみた */}
+      <Container>
         <div>
           <h2>モーダルのサンプルその3</h2>
+          <h3>react-hooks-use-modal を参考にサンプルその1を書き直してみた</h3>
           <p>Modal is Open? {isOpenModalSample2 ? 'Yes' : 'No'}</p>
           <button type="button" onClick={openSample2}>
             OPEN
@@ -86,14 +95,12 @@ const Home: NextPage = () => {
             </button>
           </ModalSample2>
         </div>
-      </div>
+      </Container>
       {/* コンテンツの高さ増やす適当な要素 */}
-      <div>
+      <Container>
         <h2>コンテンツの高さ増やす適当な要素</h2>
-        {[...Array(100)].map((_, i) => (
-          <div>{`hello, ${i}`}</div>
-        ))}
-      </div>
+        <div style={{height: '1000px', background: '#F2F2F2'}}>コンテンツの高さ増やす適当な要素</div>
+      </Container>
     </div>
   );
 };
